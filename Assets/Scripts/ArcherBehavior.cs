@@ -116,7 +116,8 @@ public class ArcherBehavior : MonoBehaviour
         // Wait for the animation timing
         yield return new WaitForSeconds(shootDelay);
 
-        if (arrowPrefab != null && player != null)
+        // Re-check if player is still in range after delay (prevents firing at respawned player)
+        if (arrowPrefab != null && player != null && isInRange())
         {
             // Spawn the arrow at the Archer's position
             Vector3 spawnPosition = transform.position;

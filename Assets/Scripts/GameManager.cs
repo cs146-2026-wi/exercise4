@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     private int totalCoins = 0; // Total coins in scene (all coins, enabled or disabled)
     private bool gameWon = false;
     private bool gameLost = false;
+    private bool canRestart = false; // Only true after restart text appears
 
     void Start()
     {
@@ -59,8 +60,8 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        // Check for any key press to restart when game is won or lost
-        if ((gameWon || gameLost) && Input.anyKeyDown)
+        // Check for any key press to restart when game is won or lost (only after restart text appears)
+        if (canRestart && Input.anyKeyDown)
         {
             Debug.Log("GameManager: Key pressed while game ended - calling ResetGame()");
             ResetGame();
@@ -159,6 +160,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         gameWon = false;
         gameLost = false;
+        canRestart = false;
 
         // Keep tilemap visible (don't hide it on reset)
 
@@ -333,6 +335,9 @@ public class GameManager : MonoBehaviour
         {
             restartTextUI.gameObject.SetActive(true);
         }
+        
+        // Now allow the player to restart
+        canRestart = true;
         
         // Pause the game if requested (at the same time as showing restart text)
         if (pauseGameOnWin)
