@@ -86,6 +86,14 @@ public class ArcherBehavior : MonoBehaviour
         return Vector3.Distance(transform.position, player.transform.position);
     }
 
+    private void facePlayer()
+    {
+        // Track player and flip sprite based on position
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.flipX = player.transform.position.x < transform.position.x;
+        }
+    }
 
     ////////////////////////////////////////////////////////////
     // OTHER METHODS: NO NEED TO SCROLL PAST THIS POINT (Unless you're interested in the code)
@@ -147,15 +155,6 @@ public class ArcherBehavior : MonoBehaviour
     {
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         return Quaternion.AngleAxis(angle, Vector3.forward);
-    }
-    
-    private void facePlayer()
-    {
-        // Track player and flip sprite based on position
-        if (spriteRenderer != null)
-        {
-            spriteRenderer.flipX = player.transform.position.x < transform.position.x;
-        }
     }
 
     /// <summary>
